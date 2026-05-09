@@ -68,7 +68,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Immediately revoke this key in the AWS IAM console. Replace with IAM roles, environment variables, or AWS Secrets Manager. Never commit credentials to source control.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "AWS Secret Access Key",
         # Looks for aws_secret_access_key = "..." with flexible spacing/quotes
@@ -79,7 +83,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Immediately revoke this key in AWS IAM. Rotate all keys associated with this account. Use AWS Secrets Manager or IAM Instance Profiles instead.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "RSA / SSH Private Key Header",
         # Private key files always start with this PEM header
@@ -90,7 +98,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Private Keys",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/004/",
         "remediation": "Remove the private key from the repo immediately. Revoke and regenerate the key pair. Store private keys securely — never in version control. Use a secrets manager or encrypted vault.",
+        "owasp_id":    "A04:2025",
+        "owasp_name":  "Cryptographic Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     },
+
     {
         "name": "GCP Service Account Key",
         # GCP JSON key files contain this field
@@ -101,7 +113,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Delete and revoke this service account key in Google Cloud IAM console. Use Workload Identity Federation or Secret Manager instead of key files.",
+        "owasp_id":    "A04:2025",
+        "owasp_name":  "Cryptographic Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     },
+
     {
         "name": "GitHub Personal Access Token",
         # GitHub's new token format: ghp_, gho_, ghu_, ghs_, ghr_ + 36 chars
@@ -112,7 +128,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Revoke this token immediately at github.com/settings/tokens. Use GitHub Actions secrets or environment variables for CI/CD. Enable token expiration policies.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Stripe Secret Key",
         # Live Stripe secret keys start with sk_live_
@@ -123,7 +143,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Roll this key immediately in the Stripe dashboard. Store API keys in environment variables or a secrets manager. Enable Stripe's restricted keys feature to limit scope.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Google API Key",
         # Google API keys always start with AIza
@@ -134,7 +158,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Restrict or delete this key in Google Cloud Console. Apply API restrictions (allowed APIs, IP/referrer allowlists). Store in environment variables, not source code.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Slack Bot / App Token",
         # Slack tokens start with xoxb-, xoxp-, xoxa-, etc.
@@ -145,7 +173,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Revoke the token at api.slack.com/apps. Regenerate and store in environment variables or your CI/CD secrets store. Audit Slack logs for unauthorized use.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "SendGrid API Key",
         # SendGrid keys have a very specific format: SG. + 22 chars + . + 43 chars
@@ -156,7 +188,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Delete and regenerate this key in the SendGrid dashboard. Use restricted API keys scoped to only the permissions needed. Store in environment variables.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
 
     # ── HIGH: Generic credential patterns ──
 
@@ -170,7 +206,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Remove the hardcoded password. Use environment variables (os.environ), a .env file excluded from git via .gitignore, or a secrets manager like HashiCorp Vault or AWS Secrets Manager.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Hardcoded Secret",
         # Matches: secret = "some_value" (at least 8 chars to avoid false positives)
@@ -181,7 +221,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Move this secret to an environment variable or secrets manager. Add a .gitignore rule to prevent config files with secrets from being committed.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Hardcoded Token",
         # Matches: token = "long_value_here"
@@ -192,7 +236,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Replace the hardcoded token with a reference to an environment variable. Rotate the token if it may have been exposed. Use short-lived tokens where possible.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Database Connection String",
         # Matches URLs like: mysql://user:pass@host/db or mongodb://...
@@ -203,7 +251,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Move the connection string to an environment variable or secrets manager. Rotate the database password. Restrict database network access to known IP ranges.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Generic Connection String Variable",
         # Matches variable names like connection_string = "..." or connstr = "..."
@@ -214,7 +266,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Move the connection string to an environment variable. Ensure the config file is excluded via .gitignore. Consider using a secrets manager for production credentials.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Credentials Embedded in URL",
         # Matches: https://user:password@hostname.com/...
@@ -225,7 +281,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Remove credentials from the URL. Use separate host/user/password variables loaded from environment or a secrets manager. This pattern also appears in Google Fonts imports — verify before acting.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
 
     # ── MEDIUM: Possible secrets, more likely to have false positives ──
 
@@ -239,7 +299,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Move the API key to an environment variable. If the key has been public, rotate it with the service provider. Use .env files excluded from git for local development.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Bearer Token in Code",
         # Matches: Authorization: Bearer eyJab...
@@ -250,7 +314,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Never hardcode bearer tokens. Use short-lived tokens generated at runtime via OAuth flows. Store any long-lived tokens in environment variables or a vault.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "JWT Token",
         # JWTs have three base64 sections separated by dots, first section starts with eyJ
@@ -261,7 +329,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Invalidate this token if it grants access to real systems. JWTs should be generated at runtime and stored in secure, httpOnly cookies or memory — not committed to code.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
     {
         "name": "Authorization Header Value",
         # Matches hardcoded Authorization header values in code
@@ -272,7 +344,11 @@ PATTERNS = [
         "mitre_name": "Unsecured Credentials: Credentials in Files",
         "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
         "remediation": "Replace hardcoded authorization values with runtime-generated tokens. Store any static credentials in environment variables or a secrets manager.",
+        "owasp_id":    "A07:2025",
+        "owasp_name":  "Authentication Failures",
+        "owasp_url":   "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     },
+
 ]
 
 
@@ -282,7 +358,15 @@ PATTERNS = [
 # Some files are dangerous just by existing in a public repo,
 # regardless of what's inside them. We flag these by filename.
 #
-# Format: (regex_pattern, severity, description, mitre_id, mitre_name, mitre_url, remediation)
+# Format: (regex, severity, description,
+#          mitre_id, mitre_name, mitre_url,
+#          remediation,
+#          owasp_id, owasp_name, owasp_url)
+#
+# OWASP Top 10 2025 mappings used here:
+#   A02:2025 = Security Misconfiguration  (exposed config/env files)
+#   A04:2025 = Cryptographic Failures     (key and cert files)
+#   A07:2025 = Authentication Failures    (credential files like .netrc)
 # ============================================================
 
 SENSITIVE_FILES = [
@@ -292,6 +376,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Add .env to your .gitignore immediately. Remove the file from git history using 'git filter-branch' or BFG Repo Cleaner. Rotate any credentials it contained.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)id_rsa$', "CRITICAL",
@@ -299,6 +385,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove this key from the repo and revoke it on all servers where it was authorized. Generate a new key pair. Private keys should never leave the machine they were created on.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'(^|/)id_ed25519$', "CRITICAL",
@@ -306,6 +394,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove this key from the repo and revoke it on all authorized servers. Generate a new key pair. Add SSH key files to .gitignore.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'(^|/)id_dsa$', "CRITICAL",
@@ -313,6 +403,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove and revoke immediately. DSA keys are also considered weak — migrate to Ed25519.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'(^|/)credentials\.json$', "CRITICAL",
@@ -320,6 +412,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Delete and revoke this service account key in Google Cloud IAM. Use Workload Identity Federation instead of key files. Add credentials.json to .gitignore.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)service[_\-]?account\.json$', "CRITICAL",
@@ -327,6 +421,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Revoke this key in Google Cloud Console immediately. Use Workload Identity or Secret Manager. Remove from git history.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)secrets\.json$', "HIGH",
@@ -334,6 +430,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Remove from the repo and add to .gitignore. Move secrets to environment variables or a dedicated secrets manager.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'\.pem$', "HIGH",
@@ -341,6 +439,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove from the repo. If this contains a private key, revoke and reissue the certificate. Add *.pem to .gitignore.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'\.key$', "HIGH",
@@ -348,6 +448,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove and revoke the key. Add *.key to .gitignore. Store keys in a vault or certificate manager, not in source control.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'\.p12$', "HIGH",
@@ -355,6 +457,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove from the repo. Revoke and reissue the certificate. PKCS12 files contain private keys and should never be in source control.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'\.pfx$', "HIGH",
@@ -362,6 +466,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove from the repo. Revoke and reissue. Add *.pfx to .gitignore.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'\.keystore$', "HIGH",
@@ -369,6 +475,8 @@ SENSITIVE_FILES = [
         "T1552.004", "Unsecured Credentials: Private Keys",
         "https://attack.mitre.org/techniques/T1552/004/",
         "Remove from the repo. Rotate all keys/certs in the keystore. Use a secrets manager or CI/CD secret injection for keystore passwords.",
+        "A04:2025", "Cryptographic Failures",
+        "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
     ),
     (
         r'(^|/)wp-config\.php$', "HIGH",
@@ -376,6 +484,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Remove wp-config.php from the repo and add to .gitignore. Rotate the database password. Move the file above the web root or use environment variables.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)\.htpasswd$', "HIGH",
@@ -383,6 +493,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Remove from the repo. Rotate all passwords in the file. Add .htpasswd to .gitignore.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)\.netrc$', "HIGH",
@@ -390,6 +502,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Remove from the repo and add to .gitignore. Rotate any credentials stored in the file. Use SSH keys or credential helpers instead.",
+        "A07:2025", "Authentication Failures",
+        "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
     ),
     (
         r'(^|/)terraform\.tfvars$', "MEDIUM",
@@ -397,6 +511,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Add terraform.tfvars to .gitignore. Use Terraform Cloud, Vault, or environment variables (TF_VAR_*) for sensitive values instead.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)database\.yml$', "MEDIUM",
@@ -404,6 +520,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Add database.yml to .gitignore. Use Rails credentials (rails credentials:edit) or environment variables for database passwords.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
     (
         r'(^|/)\.npmrc$', "MEDIUM",
@@ -411,6 +529,8 @@ SENSITIVE_FILES = [
         "T1552.001", "Unsecured Credentials: Credentials in Files",
         "https://attack.mitre.org/techniques/T1552/001/",
         "Remove from the repo and add to .gitignore. Revoke any npm tokens stored in the file. Use CI/CD secret injection for npm authentication.",
+        "A02:2025", "Security Misconfiguration",
+        "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
     ),
 ]
 
@@ -561,6 +681,9 @@ def scan_file_content(content, file_path, repo_name, in_history=False, commit=No
                 "mitre_name":  pattern.get("mitre_name", ""),
                 "mitre_url":   pattern.get("mitre_url", ""),
                 "remediation": pattern.get("remediation", ""),
+                "owasp_id":    pattern.get("owasp_id", ""),
+                "owasp_name":  pattern.get("owasp_name", ""),
+                "owasp_url":   pattern.get("owasp_url", ""),
             })
 
     return findings
@@ -572,7 +695,7 @@ def check_sensitive_filename(file_path, repo_name):
     Returns a single finding dict if matched, or None if it's fine.
     """
     for entry in SENSITIVE_FILES:
-        pattern_str, severity, description, mitre_id, mitre_name, mitre_url, remediation = entry
+        pattern_str, severity, description, mitre_id, mitre_name, mitre_url, remediation, owasp_id, owasp_name, owasp_url = entry
         if re.search(pattern_str, file_path, re.IGNORECASE):
             return {
                 "repo":        repo_name,
@@ -588,6 +711,9 @@ def check_sensitive_filename(file_path, repo_name):
                 "mitre_name":  mitre_name,
                 "mitre_url":   mitre_url,
                 "remediation": remediation,
+                "owasp_id":    owasp_id,
+                "owasp_name":  owasp_name,
+                "owasp_url":   owasp_url,
             }
     return None
 

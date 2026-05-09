@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>repo-recon Report — 2026-05-07 16:38:36</title>
+    <title>repo-recon Report — 2026-05-08 20:31:43</title>
     <style>
         /* ── Reset & base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -283,6 +283,58 @@
             border-top: 1px solid #1e293b;
             margin-top: 40px;
         }
+
+        /* ── Expandable MITRE detail panel ── */
+        .expand-icon {
+            font-size: 0.65em;
+            color: #475569;
+            margin-left: 4px;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .expand-icon.open { transform: rotate(90deg); color: #a78bfa; }
+
+        .detail-row td { padding: 0; border-bottom: 1px solid #334155; }
+
+        .detail-panel {
+            background: #0d1526;
+            border-left: 3px solid #6366f1;
+            padding: 16px 24px;
+            margin: 0;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 16px;
+        }
+        @media (max-width: 800px) {
+            .detail-grid { grid-template-columns: 1fr; }
+        }
+        .detail-block { display: flex; flex-direction: column; gap: 6px; }
+        .detail-label {
+            font-size: 0.72em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .detail-value {
+            font-size: 0.88em;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .mitre-link {
+            background: #1e1b4b;
+            color: #a78bfa;
+            border: 1px solid #4f46e5;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+        .mitre-link:hover { background: #2e2a6e; }
+        .remediation-text { color: #86efac; }
     </style>
 </head>
 <body>
@@ -291,9 +343,9 @@
     <div class="header">
         <h1>🔍 repo<span>-recon</span></h1>
         <div class="meta">
-            <span>📅 2026-05-07 16:38:36</span>
-            <span>⏱ 758s scan time</span>
-            <span>📦 20 repo(s) scanned</span>
+            <span>📅 2026-05-08 20:31:43</span>
+            <span>⏱ 0s scan time</span>
+            <span>📦 1 repo(s) scanned</span>
             
         </div>
     </div>
@@ -310,7 +362,7 @@
         <div class="stat-label">CRITICAL</div>
     </div>
     <div class="stat-card high">
-        <div class="stat-number">2</div>
+        <div class="stat-number">1</div>
         <div class="stat-label">HIGH</div>
     </div>
     <div class="stat-card medium">
@@ -322,7 +374,7 @@
         <div class="stat-label">LOW</div>
     </div>
     <div class="stat-card total">
-        <div class="stat-number">2</div>
+        <div class="stat-number">1</div>
         <div class="stat-label">TOTAL</div>
     </div>
     
@@ -333,26 +385,7 @@
         <div class="repos-section">
             <h2>Repos Scanned</h2>
             <ul>
-                <li><a href="https://github.com/delaney64/awesome-threat-intelligence.git" target="_blank">https://github.com/delaney64/awesome-threat-intelligence.git</a></li>
-<li><a href="https://github.com/delaney64/aws-account-audit.git" target="_blank">https://github.com/delaney64/aws-account-audit.git</a></li>
-<li><a href="https://github.com/delaney64/BlueTeam-Tools-Fork.git" target="_blank">https://github.com/delaney64/BlueTeam-Tools-Fork.git</a></li>
-<li><a href="https://github.com/delaney64/bookmark-organizer.git" target="_blank">https://github.com/delaney64/bookmark-organizer.git</a></li>
-<li><a href="https://github.com/delaney64/boxbreath.git" target="_blank">https://github.com/delaney64/boxbreath.git</a></li>
-<li><a href="https://github.com/delaney64/confluence-doc-audit.git" target="_blank">https://github.com/delaney64/confluence-doc-audit.git</a></li>
-<li><a href="https://github.com/delaney64/delaney64.git" target="_blank">https://github.com/delaney64/delaney64.git</a></li>
-<li><a href="https://github.com/delaney64/demo-app-js.git" target="_blank">https://github.com/delaney64/demo-app-js.git</a></li>
-<li><a href="https://github.com/delaney64/generative-ai-for-beginners.git" target="_blank">https://github.com/delaney64/generative-ai-for-beginners.git</a></li>
-<li><a href="https://github.com/delaney64/gh-actions-course.git" target="_blank">https://github.com/delaney64/gh-actions-course.git</a></li>
-<li><a href="https://github.com/delaney64/git-webhook.git" target="_blank">https://github.com/delaney64/git-webhook.git</a></li>
-<li><a href="https://github.com/delaney64/Hacking-Cheatsheets.git" target="_blank">https://github.com/delaney64/Hacking-Cheatsheets.git</a></li>
-<li><a href="https://github.com/delaney64/ip-scanner.git" target="_blank">https://github.com/delaney64/ip-scanner.git</a></li>
-<li><a href="https://github.com/delaney64/learning-terraform-3087701.git" target="_blank">https://github.com/delaney64/learning-terraform-3087701.git</a></li>
-<li><a href="https://github.com/delaney64/log-analysis-script.git" target="_blank">https://github.com/delaney64/log-analysis-script.git</a></li>
-<li><a href="https://github.com/delaney64/PFX-to-PEM.git" target="_blank">https://github.com/delaney64/PFX-to-PEM.git</a></li>
-<li><a href="https://github.com/delaney64/pi-dash.git" target="_blank">https://github.com/delaney64/pi-dash.git</a></li>
-<li><a href="https://github.com/delaney64/Progression-Studio.git" target="_blank">https://github.com/delaney64/Progression-Studio.git</a></li>
-<li><a href="https://github.com/delaney64/pyOnionScan.git" target="_blank">https://github.com/delaney64/pyOnionScan.git</a></li>
-<li><a href="https://github.com/delaney64/TorBot.git" target="_blank">https://github.com/delaney64/TorBot.git</a></li>
+                <li><a href="https://github.com/delaney64/boxbreath" target="_blank">https://github.com/delaney64/boxbreath</a></li>
             </ul>
         </div>
 
@@ -375,7 +408,6 @@
                 <select id="filter-category" onchange="applyFilters()">
                     <option value="">All</option>
                     <option value="Passwords">Passwords</option>
-<option value="Sensitive Filenames">Sensitive Filenames</option>
                 </select>
 
                 <input type="text" id="filter-search"
@@ -408,10 +440,14 @@
                         
             <tr class="finding-row "
                 data-severity="HIGH"
-                data-category="Passwords">
-                <td>1</td>
+                data-category="Passwords"
+                data-index="0"
+                onclick="toggleDetail(0)"
+                style="cursor:pointer;">
+                <td>1 <span class="expand-icon" id="icon-0">▶</span></td>
                 <td>
-                    <a href="https://github.com/delaney64/boxbreath" target="_blank">
+                    <a href="https://github.com/delaney64/boxbreath" target="_blank"
+                       onclick="event.stopPropagation()">
                         delaney64/boxbreath
                     </a>
                 </td>
@@ -426,26 +462,27 @@
                 <td class="match-cell"><code>@import url(&#x27;https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&amp;display=swap&#x27;);</code></td>
             </tr>
             
-
-            <tr class="finding-row "
-                data-severity="HIGH"
-                data-category="Sensitive Filenames">
-                <td>2</td>
-                <td>
-                    <a href="https://github.com/delaney64/generative-ai-for-beginners" target="_blank">
-                        delaney64/generative-ai-for-beginners
-                    </a>
-                </td>
-                <td class="file-cell">
-                    <code>.env.copy</code>
-                    
-                </td>
-                <td>N/A</td>
-                <td><span class="badge" style="background:#7c2d12;color:#fed7aa;border:1px solid #f97316">HIGH</span></td>
-                <td><span class="category-tag">Sensitive Filenames</span></td>
-                <td>Sensitive Filename — .env file — likely contains secrets</td>
-                <td class="match-cell"><code>.env.copy</code></td>
-            </tr>
+                <tr class="detail-row" id="detail-0" style="display:none;">
+                    <td colspan="8">
+                        <div class="detail-panel">
+                            <div class="detail-grid">
+                                <div class="detail-block">
+                                    <div class="detail-label">🎯 MITRE ATT&CK</div>
+                                    <div class="detail-value">
+                                        <a href="https://attack.mitre.org/techniques/T1552/001/" target="_blank" class="mitre-link">
+                                            T1552.001
+                                        </a>
+                                        &nbsp;—&nbsp;Unsecured Credentials: Credentials in Files
+                                    </div>
+                                </div>
+                                <div class="detail-block">
+                                    <div class="detail-label">🛠 Remediation</div>
+                                    <div class="detail-value remediation-text">Remove credentials from the URL. Use separate host/user/password variables loaded from environment or a secrets manager. This pattern also appears in Google Fonts imports — verify before acting.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             
                     </tbody>
                 </table>
@@ -462,6 +499,16 @@
 
     <!-- ── JavaScript for filtering ── -->
     <script>
+        // Toggle the MITRE detail panel for a finding row
+        function toggleDetail(index) {
+            const detailRow = document.getElementById('detail-' + index);
+            const icon = document.getElementById('icon-' + index);
+            if (!detailRow) return;
+            const isOpen = detailRow.style.display !== 'none';
+            detailRow.style.display = isOpen ? 'none' : 'table-row';
+            icon.classList.toggle('open', !isOpen);
+        }
+
         // Store all rows once on page load so we can filter without re-querying
         const allRows = Array.from(document.querySelectorAll('.finding-row'));
 

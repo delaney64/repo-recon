@@ -110,9 +110,25 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
             mitre_name = escape(f.get("mitre_name", ""))
             mitre_url  = escape(f.get("mitre_url", ""))
             remediation = escape(f.get("remediation", ""))
+            owasp_id   = escape(f.get("owasp_id", ""))
+            owasp_name = escape(f.get("owasp_name", ""))
+            owasp_url  = escape(f.get("owasp_url", ""))
 
             mitre_panel = ""
             if mitre_id:
+                owasp_block = ""
+                if owasp_id:
+                    owasp_block = f"""
+                                <div class="detail-block">
+                                    <div class="detail-label">🛡 OWASP Top 10 (2025)</div>
+                                    <div class="detail-value">
+                                        <a href="{owasp_url}" target="_blank" class="owasp-link">
+                                            {owasp_id}
+                                        </a>
+                                        &nbsp;—&nbsp;{owasp_name}
+                                    </div>
+                                </div>"""
+
                 mitre_panel = f"""
                 <tr class="detail-row" id="detail-{i}" style="display:none;">
                     <td colspan="8">
@@ -127,6 +143,7 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
                                         &nbsp;—&nbsp;{mitre_name}
                                     </div>
                                 </div>
+                                {owasp_block}
                                 <div class="detail-block">
                                     <div class="detail-label">🛠 Remediation</div>
                                     <div class="detail-value remediation-text">{remediation}</div>
@@ -493,10 +510,13 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
         }}
         .detail-grid {{
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 1fr 2fr;
             gap: 16px;
         }}
-        @media (max-width: 800px) {{
+        @media (max-width: 900px) {{
+            .detail-grid {{ grid-template-columns: 1fr 1fr; }}
+        }}
+        @media (max-width: 600px) {{
             .detail-grid {{ grid-template-columns: 1fr; }}
         }}
         .detail-block {{ display: flex; flex-direction: column; gap: 6px; }}
@@ -523,6 +543,17 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
             text-decoration: none;
         }}
         .mitre-link:hover {{ background: #2e2a6e; }}
+        .owasp-link {{
+            background: #1a2e1a;
+            color: #86efac;
+            border: 1px solid #22c55e;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-decoration: none;
+        }}
+        .owasp-link:hover {{ background: #14532d; }}
         .remediation-text {{ color: #86efac; }}
     </style>
 </head>
