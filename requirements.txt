@@ -1,0 +1,3 @@
+# repo-recon only needs one external library:
+# 'requests' handles all HTTP calls to the GitHub API
+requests
