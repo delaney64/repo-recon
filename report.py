@@ -105,13 +105,48 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
                     f'⏱ git history — {escape(commit_short)}</span>'
                 )
 
+            # Build the MITRE detail panel shown when the row is expanded
+            mitre_id   = escape(f.get("mitre_id", ""))
+            mitre_name = escape(f.get("mitre_name", ""))
+            mitre_url  = escape(f.get("mitre_url", ""))
+            remediation = escape(f.get("remediation", ""))
+
+            mitre_panel = ""
+            if mitre_id:
+                mitre_panel = f"""
+                <tr class="detail-row" id="detail-{i}" style="display:none;">
+                    <td colspan="8">
+                        <div class="detail-panel">
+                            <div class="detail-grid">
+                                <div class="detail-block">
+                                    <div class="detail-label">🎯 MITRE ATT&CK</div>
+                                    <div class="detail-value">
+                                        <a href="{mitre_url}" target="_blank" class="mitre-link">
+                                            {mitre_id}
+                                        </a>
+                                        &nbsp;—&nbsp;{mitre_name}
+                                    </div>
+                                </div>
+                                <div class="detail-block">
+                                    <div class="detail-label">🛠 Remediation</div>
+                                    <div class="detail-value remediation-text">{remediation}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>"""
+
             rows.append(f"""
             <tr class="finding-row {history_class}"
                 data-severity="{escape(f.get('severity',''))}"
-                data-category="{escape(f.get('category',''))}">
-                <td>{i + 1}</td>
+                data-category="{escape(f.get('category',''))}"
+                data-index="{i}"
+                onclick="toggleDetail({i})"
+                style="cursor:pointer;">
+                <td>{i + 1} <span class="expand-icon" id="icon-{i}">▶</span></td>
                 <td>
-                    <a href="https://github.com/{escape(f.get('repo',''))}" target="_blank">
+                    <a href="https://github.com/{escape(f.get('repo',''))}" target="_blank"
+                       onclick="event.stopPropagation()">
                         {escape(f.get('repo',''))}
                     </a>
                 </td>
@@ -125,13 +160,14 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
                 <td>{escape(f.get('rule',''))}</td>
                 <td class="match-cell"><code>{escape(f.get('match',''))}</code></td>
             </tr>
+            {mitre_panel}
             """)
 
         table_body = "\n".join(rows)
     else:
         table_body = """
         <tr>
-            <td colspan="8" style="text-align:center; padding:40px; color:#6b7280;">
+            <td colspan="9" style="text-align:center; padding:40px; color:#6b7280;">
                 No findings detected.
             </td>
         </tr>
@@ -436,6 +472,58 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
             border-top: 1px solid #1e293b;
             margin-top: 40px;
         }}
+
+        /* ── Expandable MITRE detail panel ── */
+        .expand-icon {{
+            font-size: 0.65em;
+            color: #475569;
+            margin-left: 4px;
+            transition: transform 0.2s;
+            display: inline-block;
+        }}
+        .expand-icon.open {{ transform: rotate(90deg); color: #a78bfa; }}
+
+        .detail-row td {{ padding: 0; border-bottom: 1px solid #334155; }}
+
+        .detail-panel {{
+            background: #0d1526;
+            border-left: 3px solid #6366f1;
+            padding: 16px 24px;
+            margin: 0;
+        }}
+        .detail-grid {{
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 16px;
+        }}
+        @media (max-width: 800px) {{
+            .detail-grid {{ grid-template-columns: 1fr; }}
+        }}
+        .detail-block {{ display: flex; flex-direction: column; gap: 6px; }}
+        .detail-label {{
+            font-size: 0.72em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            font-weight: 600;
+        }}
+        .detail-value {{
+            font-size: 0.88em;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }}
+        .mitre-link {{
+            background: #1e1b4b;
+            color: #a78bfa;
+            border: 1px solid #4f46e5;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-decoration: none;
+        }}
+        .mitre-link:hover {{ background: #2e2a6e; }}
+        .remediation-text {{ color: #86efac; }}
     </style>
 </head>
 <body>
@@ -533,6 +621,16 @@ def generate_report(findings, repos_scanned, scan_date, duration_seconds, histor
 
     <!-- ── JavaScript for filtering ── -->
     <script>
+        // Toggle the MITRE detail panel for a finding row
+        function toggleDetail(index) {{
+            const detailRow = document.getElementById('detail-' + index);
+            const icon = document.getElementById('icon-' + index);
+            if (!detailRow) return;
+            const isOpen = detailRow.style.display !== 'none';
+            detailRow.style.display = isOpen ? 'none' : 'table-row';
+            icon.classList.toggle('open', !isOpen);
+        }}
+
         // Store all rows once on page load so we can filter without re-querying
         const allRows = Array.from(document.querySelectorAll('.finding-row'));
 

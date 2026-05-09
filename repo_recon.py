@@ -29,11 +29,20 @@ from report import generate_report
 # ============================================================
 # SECTION 1: SECRET PATTERNS
 # ------------------------------------------------------------
-# Each pattern is a plain dictionary with four keys:
-#   "name"     → human-readable label shown in the report
-#   "regex"    → the regular expression used to detect the secret
-#   "severity" → how dangerous this is: CRITICAL / HIGH / MEDIUM / LOW
-#   "category" → grouping label used in the report
+# Each pattern is a plain dictionary with these keys:
+#   "name"        → human-readable label shown in the report
+#   "regex"       → the regular expression used to detect the secret
+#   "severity"    → how dangerous this is: CRITICAL / HIGH / MEDIUM / LOW
+#   "category"    → grouping label used in the report
+#   "mitre_id"    → MITRE ATT&CK technique ID (e.g. T1552.001)
+#   "mitre_name"  → Full technique name from ATT&CK
+#   "mitre_url"   → Direct link to the technique on attack.mitre.org
+#   "remediation" → Short, actionable fix for this finding
+#
+# MITRE ATT&CK reference:
+#   T1552     = Unsecured Credentials (parent technique)
+#   T1552.001 = Credentials in Files  (most common sub-technique here)
+#   T1552.004 = Private Keys
 #
 # Regex cheat sheet for reading these:
 #   \s    = any whitespace (space, tab)
@@ -55,6 +64,10 @@ PATTERNS = [
         "regex": r'AKIA[0-9A-Z]{16}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Immediately revoke this key in the AWS IAM console. Replace with IAM roles, environment variables, or AWS Secrets Manager. Never commit credentials to source control.",
     },
     {
         "name": "AWS Secret Access Key",
@@ -62,6 +75,10 @@ PATTERNS = [
         "regex": r'(?i)aws[_\-\s]?secret[_\-\s]?access[_\-\s]?key\s*[=:]\s*[\'"]?([A-Za-z0-9/+=]{40})[\'"]?',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Immediately revoke this key in AWS IAM. Rotate all keys associated with this account. Use AWS Secrets Manager or IAM Instance Profiles instead.",
     },
     {
         "name": "RSA / SSH Private Key Header",
@@ -69,6 +86,10 @@ PATTERNS = [
         "regex": r'-----BEGIN\s+(RSA|EC|DSA|OPENSSH|PGP)\s+PRIVATE KEY',
         "severity": "CRITICAL",
         "category": "Private Keys & Certs",
+        "mitre_id":   "T1552.004",
+        "mitre_name": "Unsecured Credentials: Private Keys",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/004/",
+        "remediation": "Remove the private key from the repo immediately. Revoke and regenerate the key pair. Store private keys securely — never in version control. Use a secrets manager or encrypted vault.",
     },
     {
         "name": "GCP Service Account Key",
@@ -76,6 +97,10 @@ PATTERNS = [
         "regex": r'"type"\s*:\s*"service_account"',
         "severity": "CRITICAL",
         "category": "Private Keys & Certs",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Delete and revoke this service account key in Google Cloud IAM console. Use Workload Identity Federation or Secret Manager instead of key files.",
     },
     {
         "name": "GitHub Personal Access Token",
@@ -83,6 +108,10 @@ PATTERNS = [
         "regex": r'gh[pousr]_[A-Za-z0-9]{36,}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Revoke this token immediately at github.com/settings/tokens. Use GitHub Actions secrets or environment variables for CI/CD. Enable token expiration policies.",
     },
     {
         "name": "Stripe Secret Key",
@@ -90,6 +119,10 @@ PATTERNS = [
         "regex": r'sk_live_[A-Za-z0-9]{24,}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Roll this key immediately in the Stripe dashboard. Store API keys in environment variables or a secrets manager. Enable Stripe's restricted keys feature to limit scope.",
     },
     {
         "name": "Google API Key",
@@ -97,6 +130,10 @@ PATTERNS = [
         "regex": r'AIza[0-9A-Za-z\-_]{35}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Restrict or delete this key in Google Cloud Console. Apply API restrictions (allowed APIs, IP/referrer allowlists). Store in environment variables, not source code.",
     },
     {
         "name": "Slack Bot / App Token",
@@ -104,6 +141,10 @@ PATTERNS = [
         "regex": r'xox[baprs]-[0-9A-Za-z\-]{10,}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Revoke the token at api.slack.com/apps. Regenerate and store in environment variables or your CI/CD secrets store. Audit Slack logs for unauthorized use.",
     },
     {
         "name": "SendGrid API Key",
@@ -111,6 +152,10 @@ PATTERNS = [
         "regex": r'SG\.[A-Za-z0-9_\-]{22}\.[A-Za-z0-9_\-]{43}',
         "severity": "CRITICAL",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Delete and regenerate this key in the SendGrid dashboard. Use restricted API keys scoped to only the permissions needed. Store in environment variables.",
     },
 
     # ── HIGH: Generic credential patterns ──
@@ -121,6 +166,10 @@ PATTERNS = [
         "regex": r'(?i)password\s*[=:]\s*[\'"][^\'"]{6,}[\'"]',
         "severity": "HIGH",
         "category": "Passwords",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Remove the hardcoded password. Use environment variables (os.environ), a .env file excluded from git via .gitignore, or a secrets manager like HashiCorp Vault or AWS Secrets Manager.",
     },
     {
         "name": "Hardcoded Secret",
@@ -128,6 +177,10 @@ PATTERNS = [
         "regex": r'(?i)\bsecret\s*[=:]\s*[\'"][^\'"]{8,}[\'"]',
         "severity": "HIGH",
         "category": "Passwords",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Move this secret to an environment variable or secrets manager. Add a .gitignore rule to prevent config files with secrets from being committed.",
     },
     {
         "name": "Hardcoded Token",
@@ -135,6 +188,10 @@ PATTERNS = [
         "regex": r'(?i)\btoken\s*[=:]\s*[\'"][A-Za-z0-9\-._~+/]{16,}[\'"]',
         "severity": "HIGH",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Replace the hardcoded token with a reference to an environment variable. Rotate the token if it may have been exposed. Use short-lived tokens where possible.",
     },
     {
         "name": "Database Connection String",
@@ -142,6 +199,10 @@ PATTERNS = [
         "regex": r'(mysql|postgresql|postgres|mongodb|redis|mssql|jdbc|mariadb)://[^\s\'"<>]+',
         "severity": "HIGH",
         "category": "Connection Strings",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Move the connection string to an environment variable or secrets manager. Rotate the database password. Restrict database network access to known IP ranges.",
     },
     {
         "name": "Generic Connection String Variable",
@@ -149,6 +210,10 @@ PATTERNS = [
         "regex": r'(?i)(connection[_\-\s]?string|connstr)\s*[=:]\s*[\'"][^\'"]+[\'"]',
         "severity": "HIGH",
         "category": "Connection Strings",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Move the connection string to an environment variable. Ensure the config file is excluded via .gitignore. Consider using a secrets manager for production credentials.",
     },
     {
         "name": "Credentials Embedded in URL",
@@ -156,6 +221,10 @@ PATTERNS = [
         "regex": r'https?://[^:\s]+:[^@\s]+@[^\s]+',
         "severity": "HIGH",
         "category": "Passwords",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Remove credentials from the URL. Use separate host/user/password variables loaded from environment or a secrets manager. This pattern also appears in Google Fonts imports — verify before acting.",
     },
 
     # ── MEDIUM: Possible secrets, more likely to have false positives ──
@@ -166,6 +235,10 @@ PATTERNS = [
         "regex": r'(?i)api[_\-]?key\s*[=:]\s*[\'"][A-Za-z0-9\-._]{16,}[\'"]',
         "severity": "MEDIUM",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Move the API key to an environment variable. If the key has been public, rotate it with the service provider. Use .env files excluded from git for local development.",
     },
     {
         "name": "Bearer Token in Code",
@@ -173,6 +246,10 @@ PATTERNS = [
         "regex": r'(?i)bearer\s+[A-Za-z0-9\-._~+/]{20,}',
         "severity": "MEDIUM",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Never hardcode bearer tokens. Use short-lived tokens generated at runtime via OAuth flows. Store any long-lived tokens in environment variables or a vault.",
     },
     {
         "name": "JWT Token",
@@ -180,6 +257,10 @@ PATTERNS = [
         "regex": r'eyJ[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+',
         "severity": "MEDIUM",
         "category": "API Keys & Tokens",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Invalidate this token if it grants access to real systems. JWTs should be generated at runtime and stored in secure, httpOnly cookies or memory — not committed to code.",
     },
     {
         "name": "Authorization Header Value",
@@ -187,6 +268,10 @@ PATTERNS = [
         "regex": r'(?i)authorization\s*[=:]\s*[\'"][^\'"]{16,}[\'"]',
         "severity": "MEDIUM",
         "category": "Passwords",
+        "mitre_id":   "T1552.001",
+        "mitre_name": "Unsecured Credentials: Credentials in Files",
+        "mitre_url":  "https://attack.mitre.org/techniques/T1552/001/",
+        "remediation": "Replace hardcoded authorization values with runtime-generated tokens. Store any static credentials in environment variables or a secrets manager.",
     },
 ]
 
@@ -197,28 +282,136 @@ PATTERNS = [
 # Some files are dangerous just by existing in a public repo,
 # regardless of what's inside them. We flag these by filename.
 #
-# Format: (regex_pattern, severity, description)
+# Format: (regex_pattern, severity, description, mitre_id, mitre_name, mitre_url, remediation)
 # ============================================================
 
 SENSITIVE_FILES = [
-    (r'(^|/)\.env(\.|$)',           "HIGH",     ".env file — likely contains secrets"),
-    (r'(^|/)id_rsa$',               "CRITICAL", "SSH private key"),
-    (r'(^|/)id_ed25519$',           "CRITICAL", "SSH private key (Ed25519)"),
-    (r'(^|/)id_dsa$',               "CRITICAL", "SSH private key (DSA)"),
-    (r'(^|/)credentials\.json$',    "CRITICAL", "GCP credentials file"),
-    (r'(^|/)service[_\-]?account\.json$', "CRITICAL", "GCP service account key"),
-    (r'(^|/)secrets\.json$',        "HIGH",     "Secrets configuration file"),
-    (r'\.pem$',                     "HIGH",     "PEM certificate or key file"),
-    (r'\.key$',                     "HIGH",     "Private key file"),
-    (r'\.p12$',                     "HIGH",     "PKCS12 certificate file"),
-    (r'\.pfx$',                     "HIGH",     "PKCS12 certificate file"),
-    (r'\.keystore$',                "HIGH",     "Java keystore file"),
-    (r'(^|/)wp-config\.php$',       "HIGH",     "WordPress config — contains DB credentials"),
-    (r'(^|/)\.htpasswd$',           "HIGH",     "Apache password file"),
-    (r'(^|/)\.netrc$',              "HIGH",     ".netrc — may contain credentials"),
-    (r'(^|/)terraform\.tfvars$',    "MEDIUM",   "Terraform vars — may contain secrets"),
-    (r'(^|/)database\.yml$',        "MEDIUM",   "Rails database config"),
-    (r'(^|/)\.npmrc$',              "MEDIUM",   ".npmrc — may contain auth tokens"),
+    (
+        r'(^|/)\.env(\.|$)', "HIGH",
+        ".env file — likely contains secrets",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Add .env to your .gitignore immediately. Remove the file from git history using 'git filter-branch' or BFG Repo Cleaner. Rotate any credentials it contained.",
+    ),
+    (
+        r'(^|/)id_rsa$', "CRITICAL",
+        "SSH private key",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove this key from the repo and revoke it on all servers where it was authorized. Generate a new key pair. Private keys should never leave the machine they were created on.",
+    ),
+    (
+        r'(^|/)id_ed25519$', "CRITICAL",
+        "SSH private key (Ed25519)",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove this key from the repo and revoke it on all authorized servers. Generate a new key pair. Add SSH key files to .gitignore.",
+    ),
+    (
+        r'(^|/)id_dsa$', "CRITICAL",
+        "SSH private key (DSA)",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove and revoke immediately. DSA keys are also considered weak — migrate to Ed25519.",
+    ),
+    (
+        r'(^|/)credentials\.json$', "CRITICAL",
+        "GCP credentials file",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Delete and revoke this service account key in Google Cloud IAM. Use Workload Identity Federation instead of key files. Add credentials.json to .gitignore.",
+    ),
+    (
+        r'(^|/)service[_\-]?account\.json$', "CRITICAL",
+        "GCP service account key",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Revoke this key in Google Cloud Console immediately. Use Workload Identity or Secret Manager. Remove from git history.",
+    ),
+    (
+        r'(^|/)secrets\.json$', "HIGH",
+        "Secrets configuration file",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Remove from the repo and add to .gitignore. Move secrets to environment variables or a dedicated secrets manager.",
+    ),
+    (
+        r'\.pem$', "HIGH",
+        "PEM certificate or key file",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove from the repo. If this contains a private key, revoke and reissue the certificate. Add *.pem to .gitignore.",
+    ),
+    (
+        r'\.key$', "HIGH",
+        "Private key file",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove and revoke the key. Add *.key to .gitignore. Store keys in a vault or certificate manager, not in source control.",
+    ),
+    (
+        r'\.p12$', "HIGH",
+        "PKCS12 certificate file",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove from the repo. Revoke and reissue the certificate. PKCS12 files contain private keys and should never be in source control.",
+    ),
+    (
+        r'\.pfx$', "HIGH",
+        "PKCS12 certificate file",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove from the repo. Revoke and reissue. Add *.pfx to .gitignore.",
+    ),
+    (
+        r'\.keystore$', "HIGH",
+        "Java keystore file",
+        "T1552.004", "Unsecured Credentials: Private Keys",
+        "https://attack.mitre.org/techniques/T1552/004/",
+        "Remove from the repo. Rotate all keys/certs in the keystore. Use a secrets manager or CI/CD secret injection for keystore passwords.",
+    ),
+    (
+        r'(^|/)wp-config\.php$', "HIGH",
+        "WordPress config — contains DB credentials",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Remove wp-config.php from the repo and add to .gitignore. Rotate the database password. Move the file above the web root or use environment variables.",
+    ),
+    (
+        r'(^|/)\.htpasswd$', "HIGH",
+        "Apache password file",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Remove from the repo. Rotate all passwords in the file. Add .htpasswd to .gitignore.",
+    ),
+    (
+        r'(^|/)\.netrc$', "HIGH",
+        ".netrc — may contain credentials",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Remove from the repo and add to .gitignore. Rotate any credentials stored in the file. Use SSH keys or credential helpers instead.",
+    ),
+    (
+        r'(^|/)terraform\.tfvars$', "MEDIUM",
+        "Terraform vars — may contain secrets",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Add terraform.tfvars to .gitignore. Use Terraform Cloud, Vault, or environment variables (TF_VAR_*) for sensitive values instead.",
+    ),
+    (
+        r'(^|/)database\.yml$', "MEDIUM",
+        "Rails database config",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Add database.yml to .gitignore. Use Rails credentials (rails credentials:edit) or environment variables for database passwords.",
+    ),
+    (
+        r'(^|/)\.npmrc$', "MEDIUM",
+        ".npmrc — may contain auth tokens",
+        "T1552.001", "Unsecured Credentials: Credentials in Files",
+        "https://attack.mitre.org/techniques/T1552/001/",
+        "Remove from the repo and add to .gitignore. Revoke any npm tokens stored in the file. Use CI/CD secret injection for npm authentication.",
+    ),
 ]
 
 
@@ -355,15 +548,19 @@ def scan_file_content(content, file_path, repo_name, in_history=False, commit=No
                 line_text = lines[line_number - 1].strip()
 
             findings.append({
-                "repo":       repo_name,
-                "file":       file_path,
-                "line":       line_number,
-                "rule":       pattern["name"],
-                "severity":   pattern["severity"],
-                "category":   pattern["category"],
-                "match":      line_text,
-                "in_history": in_history,
-                "commit":     commit,
+                "repo":        repo_name,
+                "file":        file_path,
+                "line":        line_number,
+                "rule":        pattern["name"],
+                "severity":    pattern["severity"],
+                "category":    pattern["category"],
+                "match":       line_text,
+                "in_history":  in_history,
+                "commit":      commit,
+                "mitre_id":    pattern.get("mitre_id", ""),
+                "mitre_name":  pattern.get("mitre_name", ""),
+                "mitre_url":   pattern.get("mitre_url", ""),
+                "remediation": pattern.get("remediation", ""),
             })
 
     return findings
@@ -374,18 +571,23 @@ def check_sensitive_filename(file_path, repo_name):
     Check if a file's path matches any of our sensitive filename patterns.
     Returns a single finding dict if matched, or None if it's fine.
     """
-    for pattern_str, severity, description in SENSITIVE_FILES:
+    for entry in SENSITIVE_FILES:
+        pattern_str, severity, description, mitre_id, mitre_name, mitre_url, remediation = entry
         if re.search(pattern_str, file_path, re.IGNORECASE):
             return {
-                "repo":       repo_name,
-                "file":       file_path,
-                "line":       "N/A",
-                "rule":       f"Sensitive Filename — {description}",
-                "severity":   severity,
-                "category":   "Sensitive Filenames",
-                "match":      file_path,
-                "in_history": False,
-                "commit":     None,
+                "repo":        repo_name,
+                "file":        file_path,
+                "line":        "N/A",
+                "rule":        f"Sensitive Filename — {description}",
+                "severity":    severity,
+                "category":    "Sensitive Filenames",
+                "match":       file_path,
+                "in_history":  False,
+                "commit":      None,
+                "mitre_id":    mitre_id,
+                "mitre_name":  mitre_name,
+                "mitre_url":   mitre_url,
+                "remediation": remediation,
             }
     return None
 
