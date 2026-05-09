@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>repo-recon Report — 2026-05-08 20:31:43</title>
+    <title>repo-recon Report — 2026-05-09 08:13:34</title>
     <style>
         /* ── Reset & base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -304,10 +304,13 @@
         }
         .detail-grid {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 1fr 2fr;
             gap: 16px;
         }
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
+            .detail-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
             .detail-grid { grid-template-columns: 1fr; }
         }
         .detail-block { display: flex; flex-direction: column; gap: 6px; }
@@ -334,6 +337,17 @@
             text-decoration: none;
         }
         .mitre-link:hover { background: #2e2a6e; }
+        .owasp-link {
+            background: #1a2e1a;
+            color: #86efac;
+            border: 1px solid #22c55e;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+        .owasp-link:hover { background: #14532d; }
         .remediation-text { color: #86efac; }
     </style>
 </head>
@@ -343,9 +357,9 @@
     <div class="header">
         <h1>🔍 repo<span>-recon</span></h1>
         <div class="meta">
-            <span>📅 2026-05-08 20:31:43</span>
-            <span>⏱ 0s scan time</span>
-            <span>📦 1 repo(s) scanned</span>
+            <span>📅 2026-05-09 08:13:34</span>
+            <span>⏱ 408s scan time</span>
+            <span>📦 21 repo(s) scanned</span>
             
         </div>
     </div>
@@ -362,7 +376,7 @@
         <div class="stat-label">CRITICAL</div>
     </div>
     <div class="stat-card high">
-        <div class="stat-number">1</div>
+        <div class="stat-number">2</div>
         <div class="stat-label">HIGH</div>
     </div>
     <div class="stat-card medium">
@@ -374,7 +388,7 @@
         <div class="stat-label">LOW</div>
     </div>
     <div class="stat-card total">
-        <div class="stat-number">1</div>
+        <div class="stat-number">2</div>
         <div class="stat-label">TOTAL</div>
     </div>
     
@@ -385,7 +399,27 @@
         <div class="repos-section">
             <h2>Repos Scanned</h2>
             <ul>
-                <li><a href="https://github.com/delaney64/boxbreath" target="_blank">https://github.com/delaney64/boxbreath</a></li>
+                <li><a href="https://github.com/delaney64/awesome-threat-intelligence.git" target="_blank">https://github.com/delaney64/awesome-threat-intelligence.git</a></li>
+<li><a href="https://github.com/delaney64/aws-account-audit.git" target="_blank">https://github.com/delaney64/aws-account-audit.git</a></li>
+<li><a href="https://github.com/delaney64/BlueTeam-Tools-Fork.git" target="_blank">https://github.com/delaney64/BlueTeam-Tools-Fork.git</a></li>
+<li><a href="https://github.com/delaney64/bookmark-organizer.git" target="_blank">https://github.com/delaney64/bookmark-organizer.git</a></li>
+<li><a href="https://github.com/delaney64/boxbreath.git" target="_blank">https://github.com/delaney64/boxbreath.git</a></li>
+<li><a href="https://github.com/delaney64/confluence-doc-audit.git" target="_blank">https://github.com/delaney64/confluence-doc-audit.git</a></li>
+<li><a href="https://github.com/delaney64/delaney64.git" target="_blank">https://github.com/delaney64/delaney64.git</a></li>
+<li><a href="https://github.com/delaney64/demo-app-js.git" target="_blank">https://github.com/delaney64/demo-app-js.git</a></li>
+<li><a href="https://github.com/delaney64/generative-ai-for-beginners.git" target="_blank">https://github.com/delaney64/generative-ai-for-beginners.git</a></li>
+<li><a href="https://github.com/delaney64/gh-actions-course.git" target="_blank">https://github.com/delaney64/gh-actions-course.git</a></li>
+<li><a href="https://github.com/delaney64/git-webhook.git" target="_blank">https://github.com/delaney64/git-webhook.git</a></li>
+<li><a href="https://github.com/delaney64/Hacking-Cheatsheets.git" target="_blank">https://github.com/delaney64/Hacking-Cheatsheets.git</a></li>
+<li><a href="https://github.com/delaney64/ip-scanner.git" target="_blank">https://github.com/delaney64/ip-scanner.git</a></li>
+<li><a href="https://github.com/delaney64/learning-terraform-3087701.git" target="_blank">https://github.com/delaney64/learning-terraform-3087701.git</a></li>
+<li><a href="https://github.com/delaney64/log-analysis-script.git" target="_blank">https://github.com/delaney64/log-analysis-script.git</a></li>
+<li><a href="https://github.com/delaney64/PFX-to-PEM.git" target="_blank">https://github.com/delaney64/PFX-to-PEM.git</a></li>
+<li><a href="https://github.com/delaney64/pi-dash.git" target="_blank">https://github.com/delaney64/pi-dash.git</a></li>
+<li><a href="https://github.com/delaney64/Progression-Studio.git" target="_blank">https://github.com/delaney64/Progression-Studio.git</a></li>
+<li><a href="https://github.com/delaney64/pyOnionScan.git" target="_blank">https://github.com/delaney64/pyOnionScan.git</a></li>
+<li><a href="https://github.com/delaney64/repo-recon.git" target="_blank">https://github.com/delaney64/repo-recon.git</a></li>
+<li><a href="https://github.com/delaney64/TorBot.git" target="_blank">https://github.com/delaney64/TorBot.git</a></li>
             </ul>
         </div>
 
@@ -408,6 +442,7 @@
                 <select id="filter-category" onchange="applyFilters()">
                     <option value="">All</option>
                     <option value="Passwords">Passwords</option>
+<option value="Sensitive Filenames">Sensitive Filenames</option>
                 </select>
 
                 <input type="text" id="filter-search"
@@ -475,9 +510,76 @@
                                         &nbsp;—&nbsp;Unsecured Credentials: Credentials in Files
                                     </div>
                                 </div>
+                                
+                                <div class="detail-block">
+                                    <div class="detail-label">🛡 OWASP Top 10 (2025)</div>
+                                    <div class="detail-value">
+                                        <a href="https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/" target="_blank" class="owasp-link">
+                                            A07:2025
+                                        </a>
+                                        &nbsp;—&nbsp;Authentication Failures
+                                    </div>
+                                </div>
                                 <div class="detail-block">
                                     <div class="detail-label">🛠 Remediation</div>
                                     <div class="detail-value remediation-text">Remove credentials from the URL. Use separate host/user/password variables loaded from environment or a secrets manager. This pattern also appears in Google Fonts imports — verify before acting.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            
+
+            <tr class="finding-row "
+                data-severity="HIGH"
+                data-category="Sensitive Filenames"
+                data-index="1"
+                onclick="toggleDetail(1)"
+                style="cursor:pointer;">
+                <td>2 <span class="expand-icon" id="icon-1">▶</span></td>
+                <td>
+                    <a href="https://github.com/delaney64/generative-ai-for-beginners" target="_blank"
+                       onclick="event.stopPropagation()">
+                        delaney64/generative-ai-for-beginners
+                    </a>
+                </td>
+                <td class="file-cell">
+                    <code>.env.copy</code>
+                    
+                </td>
+                <td>N/A</td>
+                <td><span class="badge" style="background:#7c2d12;color:#fed7aa;border:1px solid #f97316">HIGH</span></td>
+                <td><span class="category-tag">Sensitive Filenames</span></td>
+                <td>Sensitive Filename — .env file — likely contains secrets</td>
+                <td class="match-cell"><code>.env.copy</code></td>
+            </tr>
+            
+                <tr class="detail-row" id="detail-1" style="display:none;">
+                    <td colspan="8">
+                        <div class="detail-panel">
+                            <div class="detail-grid">
+                                <div class="detail-block">
+                                    <div class="detail-label">🎯 MITRE ATT&CK</div>
+                                    <div class="detail-value">
+                                        <a href="https://attack.mitre.org/techniques/T1552/001/" target="_blank" class="mitre-link">
+                                            T1552.001
+                                        </a>
+                                        &nbsp;—&nbsp;Unsecured Credentials: Credentials in Files
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-block">
+                                    <div class="detail-label">🛡 OWASP Top 10 (2025)</div>
+                                    <div class="detail-value">
+                                        <a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/" target="_blank" class="owasp-link">
+                                            A02:2025
+                                        </a>
+                                        &nbsp;—&nbsp;Security Misconfiguration
+                                    </div>
+                                </div>
+                                <div class="detail-block">
+                                    <div class="detail-label">🛠 Remediation</div>
+                                    <div class="detail-value remediation-text">Add .env to your .gitignore immediately. Remove the file from git history using &#x27;git filter-branch&#x27; or BFG Repo Cleaner. Rotate any credentials it contained.</div>
                                 </div>
                             </div>
                         </div>
